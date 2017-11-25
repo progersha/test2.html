@@ -61,17 +61,37 @@ $sex = isset($_POST["sex"]) ? $_POST["sex"] : "";
 </div>
 </body>
 <script>
-	var cities = [
-      <?php
-      foreach ($cities as $item) {
-          echo "'{$item}'";
-      }
-      ?>
-	];
+	const OTHER_CITY = 'другой';
 	var $city = document.querySelector("#city");
+	var $fields = document.querySelectorAll("input");
 
-	$city.addEventListener('change', function () {
-	    console.log('val');
-  });
+
+  function init() {
+		  events();
+  }
+
+  function events() {
+      [].map.call($fields, function(field) {
+          field.addEventListener('blur', function (e) {
+              if (field.value === '') {
+                  field.classList.add('error');
+              }
+          });
+      });
+
+
+      $city.addEventListener('change', function () {
+          if (this.value === OTHER_CITY) {
+              var newCityValue = prompt('Веведите город:');
+              var option = document.createElement( 'option' );
+              option.value = option.text = OTHER_CITY;
+              this.appendChild(option);
+
+              var newCityOption = this.options[this.options.length - 1];
+              newCityOption.text = newCityOption.value = newCityValue;
+          }
+      });
+  }
+  init();
 </script>
 </html>
