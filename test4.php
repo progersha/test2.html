@@ -35,7 +35,7 @@ $lastname = isset($_POST["lastname"]) ? $_POST["lastname"] : "";
           $count = 0;
           foreach ($genderList as $value) {
               $checked = "";
-              if ($count == $sex) {
+              if ($count == $sex && isset($_POST["sex"])) {
                   $checked = "checked";
               }
               echo "<label><input type='radio' name='sex' value='{$count}' {$checked}> {$value}</label> <br>";
@@ -132,10 +132,11 @@ $lastname = isset($_POST["lastname"]) ? $_POST["lastname"] : "";
                 var newCityValue = prompt('Введите город:');
                 var option = document.createElement('option');
                 option.value = option.text = OTHER_CITY;
-                this.appendChild(option);
 
                 var newCityOption = this.options[this.options.length - 1];
                 newCityOption.text = newCityOption.value = newCityValue;
+
+                this.appendChild(option);
             }
         });
 
