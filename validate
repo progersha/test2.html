@@ -1,0 +1,23 @@
+	    function validate(data) {
+		        if ((data.firstname.value == '') || (data.lastname.value == '')) {
+		            alert('Введите имя и фамилию');
+		            return;
+		        }
+		        if (!data.sex[0].checked && !data.sex[1].checked) {
+		            alert('Выберите пол');
+		            return;
+		        }
+		        if ((data.mark.value == "nocar") && (data.vehicle.checked)) {
+		            alert('Вы забыли выбрать марку машины');
+		            data.vehicle.checked = false;
+		            return;
+		        }
+		        if ((data.mark.value != "nocar") && (!data.vehicle.checked)) {
+		            alert('У Вас нет нашины!');
+		            data.vehicle.checked = true;
+		            return;
+		        }
+		        if (data.city.value == "nocity") {
+		            alert('Вы забыли выбрать город проживания');
+		            return;
+		        }
