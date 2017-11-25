@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+        .qcol {
+            width: 1000px;
+            color: #48D1CC;
+            background: #7A8B8B;
+            padding: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            color: black;
+            font-size: 22px;
+            margin: 10px;
+            font-style: italic;
+            font-weight: normal;
+        }
+
+        li {
+            list-style-type: none;
+            background-color: rgba(64, 224, 208, 0.6);
+            border: 1px dotted grey;
+        }
+
+        .error, .error li {
+            background-color: rgba(255, 81, 108, 0.58);
+        }
+
+        .error h2 {
+            color: #ffa0a0;
+        }
+
+        .no-answer, .no-answer li {
+            background-color: rgba(168, 105, 255, 0.58);
+        }
+
+        .no-answer h2 {
+            color: rgba(235, 229, 243, 0.58);
+        }
+
+        .but {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body style="background: #696969">
+<h1 style='text-align: center; text-decoration: underline; background: #7A8B8B; padding: 20px; font-size: 40px'>Тест на
+    знание HTML</h1>
+<div class="choice">
+    <h3>Выберите тест:</h3>
+    <div id="categories"></div>
+</div>
+<form class="form">
+    <div id="test"></div>
+    <div class="but">
+        <input id="run" type=button value="Проверить тест">
+        <input id="newTest" type=reset value="Новый тест">
+    </div>
+    <p id="result"></p>
+</form>
+<script type="text/javascript">
+
+    var category = [
+        {
+            name: "Тест 1",
+            type: 0
+        },
+        {
+            name: "Тест 2",
+            type: 1
+        }
+    ];
+
+    var questions = [
+        {
+            idQuest: 1,
+            category: category[0],
+            textQuest: "HTML (Hyper Text Markup Language) является:"
+        },
+        {
+            idQuest: 2,
+            category: category[0],
+            textQuest: "Инструкция браузеру, указывающая способ отображения текста:"
+        },
+        {
+            idQuest: 3,
+            category: category[0],
+            textQuest: "Web-страница (документ HTML) представляет собой:"
+
+        },
+        {
+            idQuest: 4,
+            category: category[0],
+            textQuest: "Гипертекст - это:"
+
+        },
+        {
+            idQuest: 5,
+            category: category[0],
+            textQuest: "Гиперссылки на web-странице могут обеспечить переход..."
+
+        },
+        {
+            idQuest: 6,
+            category: category[0],
+            textQuest: "В какие скобки заключаются теги?"
+
+        },
+        {
+            idQuest: 7,
+            category: category[0],
+            textQuest: "Какие атрибуты содержит тег &lt;font&gt;?"
+
+        },
+        {
+            idQuest: 8,
+            category: category[0],
+            textQuest: "Какой атрибут input содержит значение параметра, передаваемого из формы:"
+        },
+        {
+            idQuest: 9,
+            category: category[0],
+            textQuest: "Какой из атрибутов HTML-элемента td объединяет ячейки по вертикали?"
+
+        },
+        {
+            idQuest: 10,
+            category: category[0],
+            textQuest: "HTML-элемент nav применяется для отображения:"
+
+        },
+        {
+            idQuest: 11,
+            category: category[0],
+            textQuest: "Какой HTML-элемент позволяет добавить интерактивность в документ?"
+
+        },
+        {
+            idQuest: 12,
+            category: category[0],
+            textQuest: "Какой из атрибутов option позволяет задать значение опции по умолчанию?"
+
+        },
+        {
+            idQuest: 13,
+            category: category[0],
+            textQuest: "Для чего используется HTML-элемент mark?"
+        },
+        {
+            idQuest: 14,
+            category: category[0],
+            textQuest: "Какой атрибут HTML-элемента select позволяет выбрать несколько значений?"
+
+        },
+        {
+            idQuest: 15,
+            category: category[0],
+            textQuest: "Какой из HTML-элементов создает упорядоченный список?"
+
+        },
+        {
+            idQuest: 16,
+            category: category[0],
+            textQuest: "HTML-элемент позволяющий подписать элемент управления в форме:"
+
+        },
+        {
+            idQuest: 17,
+            category: category[0],
+            textQuest: "Какой из атрибутов в HTML-элементе a указывает на URL?"
+
+        },
+        {
+            idQuest: 18,
+            category: category[0],
+            textQuest: "Нижний индекс у слова создается HTML-элементом:"
+
+        },
+        {
+            idQuest: 19,
+            category: category[0],
+            textQuest: "Какой атрибут input проверяет ввод данных на соответствие шаблону?"
+
+        },
+        {
+            idQuest: 20,
+            category: category[0],
+            textQuest: "Какой атрибут script указывает на адрес подключаемого скрипта?"
+        },
+    ];
+
+    var answers = [
+        {
+            idAnsw: 1,
+            idQuest: 1,
+            textAnsw: "одним из средств при создании web-страниц",
+            isTrue: true
+        },
+        {
+            idAnsw: 2,
+            idQuest: 1,
+            textAnsw: "системой программирования",
+            isTrue: false
+        },
+        {
+            idAnsw: 3,
+            idQuest: 1,
+            textAnsw: "графическим редактором",
+            isTrue: false
+        },
+        {
+            idAnsw: 4,
+            idQuest: 1,
+            textAnsw: "системой управления базами данных",
+            isTrue: false
+        },
+        {
+            idAnsw: 1,
+            idQuest: 2,
+            textAnsw: "программный код ",
+            isTrue: false
+        },
+        {
+            idAnsw: 2,
+            idQuest: 2,
+            textAnsw: "тэг",
+            isTrue: true
+        },
+        {
+            idAnsw: 3,
+            idQuest: 2,
+            textAnsw: "файл",
+            isTrue: false
+        },
+        {
+            idAnsw: 4,
+            idQuest: 2,
+            textAnsw: "кегль",
+            isTrue: false
+        },
+        {
+            idAnsw: 1,
+            idQuest: 3,
+            textAnsw: "текстовый файл с расширением txt или doc ",
+            isTrue: false
+        },
+        {
+            idAnsw: 2,
+            idQuest: 3,
+            textAnsw: "текстовый файл с расширением htm или html",
+            isTrue: true
+        },
+        {
+            idAnsw: 3,
+            idQuest: 3,
+            textAnsw: "двоичный файл с расширением com или exe",
+            isTrue: false
+        },
+        {
+            idAnsw: 4,
+            idQuest: 3,
+            textAnsw: "графический файл с расширением gif или jpg",
+            isTrue: false
+        },
+        {
+            idAnsw: 1,
+            idQuest: 4,
+            textAnsw: "текст очень большого размера",
+            isTrue: false
+        },
+        {
+            idAnsw: 2,
+            idQuest: 4,
+            textAnsw: "текст, в котором используется шрифт большого размера",
+            isTrue: false
+        },
+        {
+            idAnsw: 3,
+            idQuest: 4,
+            textAnsw: "структурированный текст, где возможны переходы по выделенным меткам",
+            isTrue: true
+        },
+        {
+            idAnsw: 4,
+            idQuest: 4,
+            textAnsw: "текст, в который вставлены объекты с большим объемом информации",
+            isTrue: false
+        },
+        {
+            idAnsw: 1,
+            idQuest: 5,
+            textAnsw: "только в пределах данной web-страницы",
+            isTrue: false
+        },
+        {
+            idAnsw: 2,
+            idQuest: 5,
+            textAnsw: "только на web-страницы данного сервера ",
+            isTrue: false
+        },
+        {
+            idAnsw: 3,
+            idQuest: 5,
+            textAnsw: "на любую web-страницу данного региона",
+            isTrue: false
+        },
+        {
+            idAnsw: 4,
+            idQuest: 5,
+            textAnsw: "на любую web-страницу любого сервера Интернет",
+            isTrue: true
+        },
+        {
+            idAnsw: 1,
+            idQuest: 6,
+            textAnsw: "<тег.../тег>",
+            isTrue: true
+        },
+        {
+            idAnsw: 2,
+            idQuest: 6,
+            textAnsw: "тег}.../тег} ",
+            isTrue: false
+        },
+        {
+            idAnsw: 3,
+            idQuest: 6,
+            textAnsw: "[тег]...[/тег] ",
+            isTrue: false
+        },
+        {
+            idAnsw: 4,
+            idQuest: 6,
+            textAnsw: "(тег)...(/тег) ",
+            isTrue: false
+        },
+        {
+            idAnsw: 1,
+            idQuest: 7,
+            textAnsw: "size, color, face",
+            isTrue: true
+        },
+        {
+            idAnsw: 2,
+            idQuest: 7,
+            textAnsw: "align, color, size",
+            isTrue: false
+        },
+        {
+            idAnsw: 3,
+            idQuest: 7,
+            textAnsw: "width, size, color",
+            isTrue: false
+        },
+        {
+            idAnsw: 4,
+            idQuest: 7,
+            textAnsw: "size, width, face",
+            isTrue: false
+        },
+        {
+            idAnsw: 1,
+            idQuest: 8,
+            textAnsw: "value",
+            isTrue: true
+        },
+        {
+            idAnsw: 2,
+            idQuest: 8,
+            textAnsw: "name",
+            isTrue: false
+        },
+        {
+            idAnsw: 3,
+            idQuest: 8,
+            textAnsw: "disabled",
+            isTrue: false
+        },
+        {
+            idAnsw: 4,
+            idQuest: 8,
+            textAnsw: "type",
+            isTrue: false
+        },
+        {
+            idAnsw: 1,
+            idQuest: 9,
+            textAnsw: "colspan",
+            isTrue: false
+        },
+        {
+            idAnsw: 2,
+            idQuest: 9,
+            textAnsw: "class",
+            isTrue: false
+        },
+        {
+            idAnsw: 3,
+            idQuest: 9,
+            textAnsw: "id",
+            isTrue: false
+        },
+        {
+            idAnsw: 4,
+            idQuest: 9,
+            textAnsw: "rowspan",
+            isTrue: true
+        },
+        {
+            idAnsw: 1,
+            idQuest: 10,
+            textAnsw: "новостей на странице",
+            isTrue: false
+        },
+        {
+            idAnsw: 2,
+            idQuest: 10,
+            textAnsw: "секции страницы, содержащей ссылки",
+            isTrue: true
+        },
+        {
+            idAnsw: 3,
+            idQuest: 10,
+            textAnsw: "создания формы",
+            isTrue: false
+        },
+        {
+            idAnsw: 4,
+            idQuest: 10,
+            textAnsw: "создания таблицы",
+            isTrue: false
+        },
+        {
+            idAnsw: 1,
+            idQuest: 11,
+            textAnsw: "script",
+            isTrue: true
+        },
+        {
+            idAnsw: 2,
+            idQuest: 11,
+            textAnsw: "style",
+            isTrue: false
+        },
+        {
+            idAnsw: 3,
+            idQuest: 11,
+            textAnsw: "meta",
+            isTrue: false
+        },
+        {
+            idAnsw: 4,
+            idQuest: 11,
+            textAnsw: "link",
+            isTrue: false
+        },
+        {
+            idAnsw: 1,
+            idQuest: 12,
+            textAnsw: "value",
+            isTrue: false
+        },
+        {
+            idAnsw: 2,
+            idQuest: 12,
+            textAnsw: "disabled",
+            isTrue: false
+        },
+        {
+            idAnsw: 3,
+            idQuest: 12,
+            textAnsw: "selected",
+            isTrue: true
+        },
+        {
+            idAnsw: 4,
+            idQuest: 12,
+            textAnsw: "label",
+            isTrue: false
+        },
+        {
+            idAnsw: 1,
+            idQuest: 13,
+            textAnsw: "подчеркивания текста",
+            isTrue: false
+        },
+        {
+            idAnsw: 2,
+            idQuest: 13,
+            textAnsw: "затемнение текста",
+            isTrue: false
+        },
+        {
+            idAnsw: 3,
+            idQuest: 13,
+            textAnsw: "зачеркивания текста",
+            isTrue: false
+        },
+        {
+            idAnsw: 4,
+            idQuest: 13,
+            textAnsw: "подсветки текста",
+            isTrue: true
+        },
+        {
+            idAnsw: 1,
+            idQuest: 14,
+            textAnsw: "size",
+            isTrue: false
+        },
+        {
+            idAnsw: 2,
+            idQuest: 14,
+            textAnsw: "autofocus",
+            isTrue: false
+        },
+        {
+            idAnsw: 3,
+            idQuest: 14,
+            textAnsw: "multiple",
+            isTrue: true
+        },
+        {
+            idAnsw: 4,
+            idQuest: 14,
+            textAnsw: "name",
+            isTrue: false
+        },
+        {
+            idAnsw: 1,
+            idQuest: 15,
+            textAnsw: "li",
+            isTrue: false
+        },
+        {
+            idAnsw: 2,
+            idQuest: 15,
+            textAnsw: "ol",
+            isTrue: true
+        },
+        {
+            idAnsw: 3,
+            idQuest: 15,
+            textAnsw: "ul",
+            isTrue: false
+        },
+        {
+            idAnsw: 4,
+            idQuest: 15,
+            textAnsw: "dl",
+            isTrue: false
+        },
+        {
+            idAnsw: 1,
+            idQuest: 16,
+            textAnsw: "caption",
+            isTrue: false
+        },
+        {
+            idAnsw: 2,
+            idQuest: 16,
+            textAnsw: "input",
+            isTrue: false
+        },
+        {
+            idAnsw: 3,
+            idQuest: 16,
+            textAnsw: "select",
+            isTrue: false
+        },
+        {
+            idAnsw: 4,
+            idQuest: 16,
+            textAnsw: "label",
+            isTrue: true
+        },
+        {
+            idAnsw: 1,
+            idQuest: 17,
+            textAnsw: "href",
+            isTrue: true
+        },
+        {
+            idAnsw: 2,
+            idQuest: 17,
+            textAnsw: "link",
+            isTrue: false
+        },
+        {
+            idAnsw: 3,
+            idQuest: 17,
+            textAnsw: "src",
+            isTrue: false
+        },
+        {
+            idAnsw: 4,
+            idQuest: 17,
+            textAnsw: "type",
+            isTrue: false
+        },
+        {
+            idAnsw: 1,
+            idQuest: 18,
+            textAnsw: "pre",
+            isTrue: false
+        },
+        {
+            idAnsw: 2,
+            idQuest: 18,
+            textAnsw: "sup",
+            isTrue: false
+        },
+        {
+            idAnsw: 3,
+            idQuest: 18,
+            textAnsw: "span",
+            isTrue: false
+        },
+        {
+            idAnsw: 4,
+            idQuest: 18,
+            textAnsw: "sub",
+            isTrue: true
+        },
+        {
+            idAnsw: 1,
+            idQuest: 19,
+            textAnsw: "placeholder",
+            isTrue: false
+        },
+        {
+            idAnsw: 2,
+            idQuest: 19,
+            textAnsw: "required",
+            isTrue: false
+        },
+        {
+            idAnsw: 3,
+            idQuest: 19,
+            textAnsw: "pattern",
+            isTrue: true
+        },
+        {
+            idAnsw: 4,
+            idQuest: 19,
+            textAnsw: "autocomplete",
+            isTrue: false
+        },
+        {
+            idAnsw: 1,
+            idQuest: 20,
+            textAnsw: "src",
+            isTrue: true
+        },
+        {
+            idAnsw: 2,
+            idQuest: 20,
+            textAnsw: "link",
+            isTrue: false
+        },
+        {
+            idAnsw: 3,
+            idQuest: 20,
+            textAnsw: "href",
+            isTrue: false
+        },
+        {
+            idAnsw: 4,
+            idQuest: 20,
+            textAnsw: "url",
+            isTrue: false
+        }
+    ];
+
+
+    var test = document.getElementById('test');
+    var categories = document.getElementById("categories");
+    var form = document.querySelector('.form');
+    var currentQuestions = [];
+
+    function init() {
+        var i;
+        form.style.display = 'none';
+        for (i = 0; i < category.length; i++) {
+            var item = category[i];
+            var btn = document.createElement('button');
+            btn.classList = "btn";
+            btn.innerHTML = item.name;
+            (function (btn, type) {
+                btn.onclick = function () {
+                    test.innerHTML = "";
+                    rand_test(type);
+                    showQuestions();
+                };
+            })(btn, item.type);
+            categories.appendChild(btn);
+        }
+
+    }
+
+    init();
+
+    function randomBetween(a, b) {
+        return +a + Math.floor(Math.random() * (b - a + 1));
+    }
+
+    function rand_test(type) {
+        currentQuestions = [];
+        var i;
+        for (i = 0; i < questions.length; i++) {
+            if (questions[i].category.type == type) {
+                currentQuestions.push(questions[i]);
+            }
+        }
+        var len = currentQuestions.length;
+        var n = randomBetween(2, len);
+        var m = len - n;
+        for (i = 1; i <= m; i++) {
+            var ind = randomBetween(0, len - 1);
+            currentQuestions.splice(ind, 1);
+        }
+    }
+
+    function showQuestions() {
+        form.style.display = 'block';
+        for (var i = 0; i < currentQuestions.length; i++) {
+            var q = currentQuestions[i];
+            var questBlock = document.createElement("div");
+            var questTitle = document.createElement("h2");
+            questBlock.className = "qcol";
+            questTitle.innerHTML = (i + 1) + '. ' + q.textQuest;
+            questBlock.appendChild(questTitle);
+            var ul = document.createElement("ul");
+            for (var j = 0; j < answers.length; j++) {
+                if (answers[j].idQuest != q.idQuest)
+                    continue;
+                var li = document.createElement("li");
+                var label = document.createElement("label");
+                var inputR = document.createElement("input");
+                inputR.type = "radio";
+                inputR.name = "q" + i;
+                inputR.isRight = answers[j].isTrue;
+                li.appendChild(label);
+                label.appendChild(inputR);
+                var text = document.createTextNode(answers[j].textAnsw);
+                label.appendChild(text);
+                ul.appendChild(li);
+            }
+            questBlock.appendChild(ul);
+            test.appendChild(questBlock);
+        }
+    }
+
+    function getQuestBlockByAnswer(arrAnswer, iter) {
+        if (iter > 5) {
+            return document.body;
+        }
+        if (arrAnswer.classList.contains('qcol')) {
+            return arrAnswer;
+        }
+        return getQuestBlockByAnswer(arrAnswer.parentElement, iter++);
+    }
+
+    function removeError() {
+        var arrDiv = document.getElementsByClassName("error");
+        var length = arrDiv.length;
+        for (var i = 0; i < length; i++)
+            arrDiv[0].classList.remove('error');
+    }
+
+    function removeNoAnswer() {
+        var arrDiv = document.getElementsByClassName("no-answer");
+        var length = arrDiv.length;
+        for (var i = 0; i < length; i++) {
+            arrDiv[0].classList.remove('no-answer');
+        }
+    }
+
+    function noChecked() {
+        var arrAnswers = document.getElementsByTagName("input");
+        for (var i = 0; i < arrAnswers.length; i++) {
+            var questBlock = getQuestBlockByAnswer(arrAnswers[i], 0);
+            questBlock.isCkecked = false;
+        }
+    }
+
+    run.onclick = function () {
+        var arrAnswers = document.getElementsByTagName("input");
+        var countCorrectAnswers = 0;
+        var questionChecked = 0;
+        for (var i = 0; i < arrAnswers.length; i++) {
+            var questBlock = getQuestBlockByAnswer(arrAnswers[i], 0);
+            if (arrAnswers[i].checked) {
+                questBlock.isCkecked = true;
+                questionChecked++;
+                if (arrAnswers[i].isRight) {
+                    countCorrectAnswers++;
+                    questBlock.classList.remove("no-answer");
+                    questBlock.classList.remove("error");
+                }
+                else {
+                    questBlock.classList.add("error");
+                    questBlock.classList.remove("no-answer");
+                }
+            } else {
+                if (questBlock.isCkecked) {
+                    questBlock.classList.remove("no-answer");
+
+                } else {
+                    questBlock.classList.add("no-answer");
+                }
+            }
+        }
+        removeError();
+        removeNoAnswer();
+        noChecked();
+    };
+
+    newTest.onclick = function () {
+        removeError();
+        removeNoAnswer();
+        noChecked();
+    }
+</script>
+</body>
+</html>
