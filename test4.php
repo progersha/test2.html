@@ -33,7 +33,7 @@ $sex = isset($_POST["sex"]) ? $_POST["sex"] : "";
                 <input type="radio" name="sex" value="Мужской"> M <br>
             </div>
             <div> Ваш город:
-                <select name="city">
+                <select name="city" id="city">
                     <?php
                     foreach ($cities as $item) {
                         $selected = "";
@@ -61,6 +61,17 @@ $sex = isset($_POST["sex"]) ? $_POST["sex"] : "";
 </div>
 </body>
 <script>
+	var cities = [
+      <?php
+      foreach ($cities as $item) {
+          echo "'{$item}'";
+      }
+      ?>
+	];
+	var $city = document.querySelector("#city");
 
+	$city.addEventListener('change', function () {
+	    console.log('val');
+  });
 </script>
 </html>
