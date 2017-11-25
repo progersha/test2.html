@@ -9,8 +9,7 @@ $cities = [
     "Владивосток",
     "Москва",
     "Санкт-Петербург",
-    "Хабаровск",
-    "другой"
+    "Хабаровск"
 ];
 $genderList = [
     "Женский",
@@ -21,6 +20,15 @@ $city = isset($_POST["city"]) ? $_POST["city"] : "";
 $sex = isset($_POST["sex"]) ? $_POST["sex"] : "";
 $name = isset($_POST["firstname"]) ? $_POST["firstname"] : "";
 $lastname = isset($_POST["lastname"]) ? $_POST["lastname"] : "";
+
+$customCity = isset($_POST["custom_city"]) ? $_POST["custom_city"] : "";
+
+if (!empty($customCity)) {
+    $cities = array_merge($cities, explode(",", $customCity), ["другой"]);
+} else {
+    $cities[] = "другой";
+}
+
 ?>
 <body>
 <div class="block">
@@ -57,6 +65,7 @@ $lastname = isset($_POST["lastname"]) ? $_POST["lastname"] : "";
 				</select>
 			</div>
 			<br>
+			<input type="hidden" name="custom_city" id="custom_city" value="<?= $customCity ?>">
 			<input type="submit" value="Отправить">
 		</div>
 	</form>
@@ -81,6 +90,8 @@ $lastname = isset($_POST["lastname"]) ? $_POST["lastname"] : "";
     var $city = document.querySelector("#city");
     var fields = document.querySelectorAll("input[type=text]");
     var sexFields = document.querySelectorAll("input[name=sex]");
+    var customCity = document.querySelector("#custom_city");
+
     var sexBlock = document.querySelector('.sex');
       function init() {
         events();
@@ -135,6 +146,11 @@ $lastname = isset($_POST["lastname"]) ? $_POST["lastname"] : "";
 
                 var newCityOption = this.options[this.options.length - 1];
                 newCityOption.text = newCityOption.value = newCityValue;
+
+                if (customCity.value != "") {
+                    customCity.value += ",";
+                }
+                customCity.value += newCityValue;
 
                 this.appendChild(option);
             }
